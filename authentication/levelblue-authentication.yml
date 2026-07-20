@@ -1,0 +1,93 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/levelblue-usm-anywhere-openapi.yml
+docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients
+
+summary:
+  types: [http]
+  http_schemes: [basic, bearer]
+  api_key_in: [header]
+  oauth2_flows: [clientCredentials]
+  note: >-
+    The docs state "USM Anywhere uses OAuth 2.0 to authenticate against the REST APIs",
+    but the published spec models the exchange with plain http securitySchemes (basic on
+    the token endpoint, bearer everywhere else) rather than an oauth2 securityScheme with
+    a clientCredentials flow object.
+
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  sources: [openapi/levelblue-usm-anywhere-openapi.yml]
+  applies_to: ['POST /oauth/token']
+  detail: >-
+    Client ID as the username, client secret as the password. Used only to obtain a token.
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources: [openapi/levelblue-usm-anywhere-openapi.yml]
+  applies_to: [all operations except POST /oauth/token]
+  default: true
+  detail: 'Root-level security requirement — sent as Authorization: Bearer <access_token>.'
+
+token_exchange:
+  endpoint: POST /oauth/token
+  base_url_template: https://<subdomain>.alienvault.cloud/api/2.0
+  grant_type: client_credentials
+  request_content_type: application/x-www-form-urlencoded
+  client_authentication: http-basic
+  response:
+    access_token: JWT
+    token_type: bearer
+    expires_in: 899
+    scope: trust read write
+    jti: token identifier
+  failure: 401 Unauthorized (ErrorResponse envelope)
+
+credential_provisioning:
+  ui_path: Profile Settings > API Clients
+  minimum_role: Manager
+  actions: [create client, enable/disable client, edit client ID]
+  detail: >-
+    Client credentials are created in the USM Anywhere web UI, not through an API. A newly
+    created client must be explicitly toggled enabled before it can obtain a token.
+  docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients
+
+authorization:
+  model: role-based
+  roles: [Read-Only, Investigator, Analyst, Manager]
+  note: >-
+    Effective permissions follow the USM Anywhere role attached to the API client rather
+    than a requestable scope subset. See scopes/levelblue-scopes.yml.
+
+secondary_surfaces:
+- name: USM Anywhere webhook ingestion
+  type: apiKey
+  in: header
+  parameter_name: API_KEY
+  also_accepted_in: query
+  endpoint: 'POST https://<base_url>/api/1.0/webhook/push'
+  rotatable: true
+  docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/cloud-connector/webhook_connector/reset_api_key
+- name: LevelBlue Open Threat Exchange (OTX) DirectConnect API
+  type: apiKey
+  base_url: https://otx.alienvault.com/api/v1
+  validation_endpoint: /api/v1/users/me
+  docs: https://otx.alienvault.com/assets/static/external_api.html
+
+additional_controls:
+  multifactor_authentication:
+    supported: true
+    scope: web UI sign-in (can be required tenant-wide); not applicable to API clients
+    docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/introduction/multifactor-authentication
+  single_sign_on:
+    supported: true
+    scope: web UI sign-in via SAML SSO configuration; not applicable to API clients
+    docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/configuring-sso
+
+gaps:
+- No mutualTLS, openIdConnect or OIDC discovery document is published.
+- No token revocation or introspection endpoint is documented.
+- No refresh token is issued — clients re-run the client_credentials exchange.
+- The REST API is available only in the Standard and Premium editions of USM Anywhere.
