@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: USM Anywhere™ API Reference Alarms OAuth API
+  description: AT&T Cybersecurity publishes REST APIs for USM Anywhere that provide a programmatic interface that will allow you to access your data directly from your own applications and extensions.
+  version: '2.0'
+servers:
+- url: https://your-subdomain.alienvault.cloud/api/2.0
+  description: USM Anywhere API Server
+security:
+- bearerAuth: []
+tags:
+- name: OAuth
+  description: Endpoint for OAuth 2.0 functionality.
+paths:
+  /oauth/token:
+    post:
+      tags:
+      - OAuth
+      summary: Get OAuth Token
+      description: Authenticate your client to receive an OAuth Bearer token. This endpoint uses Basic Authentication with your client ID as the username and the client secret as the password.
+      security:
+      - basicAuth: []
+      requestBody:
+        description: The grant type must be client_credentials.
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  description: The grant type to use for authentication.
+                  example: client_credentials
+      responses:
+        '200':
+          description: Successful authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              example:
+                access_token: xxx.yyy.zzz
+                token_type: bearer
+                expires_in: 899
+                scope: trust read write
+                jti: 3b4cc123-2164-44cb-ae34-9c76d7c429ab
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        scope:
+          type: string
+        jti:
+          type: string
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      - scope
+      - jti
+    ErrorResponse:
+      type: object
+      properties:
+        result:
+          type: string
+        location:
+          type: string
+        error:
+          type: string
+      required:
+      - result
+      - location
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
