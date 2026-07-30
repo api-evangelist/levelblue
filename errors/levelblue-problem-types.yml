@@ -1,0 +1,66 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/levelblue-usm-anywhere-openapi.yml
+format: custom-json
+rfc9457: false
+media_type: application/json
+
+envelope:
+  schema: ErrorResponse
+  fields:
+  - name: result
+    type: string
+    required: true
+  - name: location
+    type: string
+    required: true
+  - name: error
+    type: string
+    required: false
+  note: >-
+    USM Anywhere does not emit application/problem+json. The failure class is carried by
+    the HTTP status code; the JSON body carries result/location/error.
+
+problems:
+- status: 401
+  title: Unauthorized
+  description: Unauthorized.
+  schema: ErrorResponse
+  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#POST /oauth/token'
+  remediation: >-
+    Re-check the client ID and client secret used as the HTTP Basic credential, confirm
+    the API client is enabled on the API Clients tab in Profile Settings, and confirm
+    grant_type=client_credentials was sent form-encoded.
+- status: 404
+  title: Alarm not found
+  description: Alarm not found.
+  schema: ErrorResponse
+  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#GET /alarms/{alarmId}'
+  remediation: Verify the alarm UUID; alarms outside the tenant's retention window are not addressable.
+- status: 404
+  title: Alarm not found
+  description: Alarm not found.
+  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#GET /alarms/{alarmId}/labels'
+  remediation: Verify the alarm UUID.
+- status: 404
+  title: Alarm or Label not found
+  description: Alarm or Label not found.
+  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#PUT /alarms/{alarmId}/labels/{labelId}'
+  remediation: Verify both the alarm UUID and the label ID exist in this tenant before associating them.
+- status: 404
+  title: Alarm or Label not found
+  description: Alarm or Label not found.
+  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#DELETE /alarms/{alarmId}/labels/{labelId}'
+  remediation: Verify both the alarm UUID and the label ID.
+- status: 404
+  title: Event not found
+  description: Event not found.
+  schema: ErrorResponse
+  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#GET /events/{eventId}'
+  remediation: Verify the event UUID; events age out of the tenant's searchable window.
+
+coverage_gaps:
+- >-
+    The published v2.0 spec declares no 400, 403, 429 or 5xx responses on any operation,
+    and no documented error-code registry exists in the USM Anywhere user guide, so this
+    catalog covers only the 401/404 responses the spec actually declares.

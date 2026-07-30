@@ -1,0 +1,730 @@
+openapi: 3.0.0
+info:
+  title: USM Anywhere™ API Reference
+  description: >-
+    AT&T Cybersecurity publishes REST APIs for USM Anywhere that provide a
+    programmatic interface that will allow you to access your data directly from
+    your own applications and extensions.
+  version: '2.0'
+servers:
+  - url: https://your-subdomain.alienvault.cloud/api/2.0
+    description: USM Anywhere API Server
+security:
+  - bearerAuth: []
+tags:
+  - name: Alarms
+    description: Endpoints for managing and searching alarm messages.
+  - name: Events
+    description: Endpoints for managing and searching events.
+  - name: OAuth
+    description: Endpoint for OAuth 2.0 functionality.
+paths:
+  /oauth/token:
+    post:
+      tags:
+        - OAuth
+      summary: Get OAuth Token
+      description: >-
+        Authenticate your client to receive an OAuth Bearer token. This endpoint
+        uses Basic Authentication with your client ID as the username and the
+        client secret as the password.
+      security:
+        - basicAuth: []
+      requestBody:
+        description: The grant type must be client_credentials.
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  description: The grant type to use for authentication.
+                  example: client_credentials
+      responses:
+        '200':
+          description: Successful authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              example:
+                access_token: xxx.yyy.zzz
+                token_type: bearer
+                expires_in: 899
+                scope: trust read write
+                jti: 3b4cc123-2164-44cb-ae34-9c76d7c429ab
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /alarms:
+    get:
+      tags:
+        - Alarms
+      summary: Get a page of alarms
+      description: >-
+        Retrieves a paginated list of alarms. Can be filtered by various
+        parameters.
+      parameters:
+        - name: page
+          in: query
+          description: The page number of results to return (zero-based).
+          schema:
+            type: integer
+        - name: size
+          in: query
+          description: The number of results to return per page.
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description: The parameter and direction to sort results by.
+          schema:
+            type: string
+            example: timestamp_occured,asc
+        - name: status
+          in: query
+          description: Filter by the status of the alarm.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - open
+                - closed
+                - in_review
+        - name: suppressed
+          in: query
+          description: Filter alarms by the suppressed flag.
+          schema:
+            type: boolean
+        - name: rule_intent
+          in: query
+          description: Filter by the intent of the rule that triggered the alarm.
+          schema:
+            type: string
+        - name: rule_method
+          in: query
+          description: Filter by the method of the rule that triggered the alarm.
+          schema:
+            type: string
+        - name: rule_strategy
+          in: query
+          description: Filter by the strategy of the rule that triggered the alarm.
+          schema:
+            type: string
+        - name: priority_label
+          in: query
+          description: Filter by the priority of the alarm.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - low
+                - medium
+                - high
+        - name: alarm_sensor_sources
+          in: query
+          description: Filter by the UUID of the sensor.
+          schema:
+            type: string
+            format: uuid
+        - name: timestamp_occured_gte
+          in: query
+          description: >-
+            Filter for alarms that occurred at or after this timestamp (epoch
+            milliseconds).
+          schema:
+            type: integer
+            format: int64
+        - name: timestamp_occured_lte
+          in: query
+          description: >-
+            Filter for alarms that occurred at or before this timestamp (epoch
+            milliseconds).
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A paginated list of alarms.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlarmPage'
+              example:
+                _links:
+                  first:
+                    href: >-
+                      https://mysubdomain.alienvault.cloud/api/2.0/alarms?page=0&size=20&sort=timestamp_occured,desc
+                  self:
+                    href: https://mysubdomain.alienvault.cloud/api/2.0/alarms
+                  next:
+                    href: >-
+                      https://mysubdomain.alienvault.cloud/api/2.0/alarms?page=1&size=20&sort=timestamp_occured,desc
+                  last:
+                    href: >-
+                      https://mysubdomain.alienvault.cloud/api/2.0/alarms?page=175&size=20&sort=timestamp_occured,desc
+                _embedded:
+                  alarms:
+                    - uuid: 971918fd-a569-548a-5a80-1ffcda2a8365
+                      priority: 20
+                      status: open
+                      rule_intent: Environmental Awareness
+                page:
+                  size: 20
+                  totalElements: 3506
+                  totalPages: 176
+                  number: 0
+  /alarms/{alarmId}:
+    get:
+      tags:
+        - Alarms
+      summary: Get Alarm Details
+      description: Retrieves the full details for a single alarm by its UUID.
+      parameters:
+        - name: alarmId
+          in: path
+          required: true
+          description: The UUID of the alarm to retrieve.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Alarm details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alarm'
+              example:
+                uuid: 971918fd-a569-548a-5a80-1ffcda2a8365
+                has_alarm: false
+                needs_enrichment: true
+                priority: 20
+                suppressed: false
+                events:
+                  - uuid: f5e69126-dc89-6691-e2e7-6db03905830d
+                rule_intent: Environmental Awareness
+                status: open
+                _links:
+                  self:
+                    href: >-
+                      https://mysubdomain.aveng.us/api/2.0/alarms/971918fd-a569-548a-5a80-1ffcda2a8365
+        '404':
+          description: Alarm not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /alarms/{alarmId}/labels:
+    get:
+      tags:
+        - Alarms
+      summary: List labels for an alarm
+      description: Retrieves a list of label IDs associated with a specific alarm.
+      parameters:
+        - name: alarmId
+          in: path
+          required: true
+          description: The UUID of the alarm.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A list of label IDs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlarmLabels'
+              example:
+                alarm_labels:
+                  - 971918fd-a569-548a-5a80-1ffcda2a8365
+        '404':
+          description: Alarm not found.
+  /alarms/{alarmId}/labels/{labelId}:
+    put:
+      tags:
+        - Alarms
+      summary: Add a label to an alarm
+      description: Associates a label with a specific alarm.
+      parameters:
+        - name: alarmId
+          in: path
+          required: true
+          description: The UUID of the alarm.
+          schema:
+            type: string
+            format: uuid
+        - name: labelId
+          in: path
+          required: true
+          description: The ID of the label to add.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Label added successfully.
+        '404':
+          description: Alarm or Label not found.
+    delete:
+      tags:
+        - Alarms
+      summary: Remove a label from an alarm
+      description: Disassociates a label from a specific alarm.
+      parameters:
+        - name: alarmId
+          in: path
+          required: true
+          description: The UUID of the alarm.
+          schema:
+            type: string
+            format: uuid
+        - name: labelId
+          in: path
+          required: true
+          description: The ID of the label to remove.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Label removed successfully.
+        '404':
+          description: Alarm or Label not found.
+  /events:
+    get:
+      tags:
+        - Events
+      summary: Get a page of events
+      description: >-
+        Retrieves a paginated list of events, which can be filtered by various
+        parameters.
+      parameters:
+        - name: page
+          in: query
+          description: The page number of results to return (zero-based).
+          schema:
+            type: integer
+        - name: size
+          in: query
+          description: The number of results to return per page.
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description: The parameter and direction to sort results by.
+          schema:
+            type: string
+            example: timestamp_occured,asc
+        - name: account_name
+          in: query
+          required: true
+          description: The account name.
+          schema:
+            type: string
+        - name: suppressed
+          in: query
+          description: Filter events by the suppressed flag.
+          schema:
+            type: boolean
+        - name: plugin
+          in: query
+          description: The plugin name.
+          schema:
+            type: string
+        - name: event_name
+          in: query
+          description: The name of the event.
+          schema:
+            type: string
+        - name: source_name
+          in: query
+          description: The source name.
+          schema:
+            type: string
+        - name: sensor_uuid
+          in: query
+          description: The UUID of the sensor.
+          schema:
+            type: string
+            format: uuid
+        - name: source_username
+          in: query
+          description: The username of the person that triggered the event.
+          schema:
+            type: string
+        - name: timestamp_occured_gte
+          in: query
+          description: >-
+            Filter for events that occurred at or after this timestamp (epoch
+            milliseconds).
+          schema:
+            type: integer
+            format: int64
+        - name: timestamp_occured_lte
+          in: query
+          description: >-
+            Filter for events that occurred at or before this timestamp (epoch
+            milliseconds).
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A paginated list of events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventPage'
+              example:
+                _links:
+                  self:
+                    href: https://mysubdomain.alienvault.cloud/api/2.0/events
+                _embedded:
+                  events:
+                    - uuid: 39a6918f-33f2-ec9b-0fcc-42bb90f10a1f
+                page:
+                  size: 20
+                  totalElements: 3506
+                  totalPages: 176
+                  number: 0
+  /events/{eventId}:
+    get:
+      tags:
+        - Events
+      summary: Get Event Details
+      description: Retrieves the full details for a single event by its UUID.
+      parameters:
+        - name: eventId
+          in: path
+          required: true
+          description: The UUID of the event to retrieve.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Event details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+              example:
+                uuid: 39a6918f-33f2-ec9b-0fcc-42bb90f10a1f
+                account_name: generic-account
+                event_name: PutObject
+                timestamp_occured: '1528817037000'
+                _links:
+                  self:
+                    href: >-
+                      https://mysubdomain.aveng.us/api/2.0/events/39a6918f-33f2-ec9b-0fcc-42bb90f10a1f
+        '404':
+          description: Event not found.
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    HalLink:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+        - href
+    AlarmLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
+    AlarmSouceLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
+    AlarmDestinationLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
+    EventLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
+    PageLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
+        first:
+          $ref: '#/components/schemas/HalLink'
+        last:
+          $ref: '#/components/schemas/HalLink'
+        next:
+          $ref: '#/components/schemas/HalLink'
+        prev:
+          $ref: '#/components/schemas/HalLink'
+    AlarmSource:
+      type: object
+      properties:
+        address:
+          type: string
+        hostname:
+          type: string
+        fqdn:
+          type: string
+        asset_id:
+          type: string
+        organisation:
+          type: string
+        country:
+          type: string
+        canonical:
+          type: string
+        name:
+          type: string
+        event_count:
+          type: integer
+        _links:
+          $ref: '#/components/schemas/AlarmSouceLinks'
+      required:
+        - event_count
+    AlarmDestination:
+      type: object
+      properties:
+        address:
+          type: string
+        hostname:
+          type: string
+        fqdn:
+          type: string
+        asset_id:
+          type: string
+        organisation:
+          type: string
+        country:
+          type: string
+        canonical:
+          type: string
+        name:
+          type: string
+        event_count:
+          type: integer
+        _links:
+          $ref: '#/components/schemas/AlarmDestinationLinks'
+      required:
+        - event_count
+    AlarmEvent:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        has_alarm:
+          type: boolean
+        needs_enrichment:
+          type: boolean
+        priority:
+          type: integer
+        suppressed:
+          type: boolean
+        source_address:
+          type: string
+        source_asset_id:
+          type: string
+        source_canonical:
+          type: string
+        source_country:
+          type: string
+        source_fqdn:
+          type: string
+        source_hostname:
+          type: string
+        source_name:
+          type: string
+        source_organisation:
+          type: string
+        destination_address:
+          type: string
+        destination_asset_id:
+          type: string
+        destination_canonical:
+          type: string
+        destination_country:
+          type: string
+        destination_fqdn:
+          type: string
+        destination_hostname:
+          type: string
+        destination_name:
+          type: string
+        destination_organisation:
+          type: string
+        _links:
+          $ref: '#/components/schemas/EventLinks'
+      required:
+        - uuid
+        - has_alarm
+        - needs_enrichment
+    Alarm:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        alarm_labels:
+          type: array
+          items:
+            type: string
+        has_alarm:
+          type: boolean
+        needs_enrichment:
+          type: boolean
+        packet_data:
+          type: array
+          items:
+            type: string
+        priority:
+          type: integer
+        suppressed:
+          type: boolean
+        destinations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlarmDestination'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlarmSource'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlarmEvent'
+        _links:
+          $ref: '#/components/schemas/AlarmLinks'
+      required:
+        - uuid
+        - has_alarm
+        - needs_enrichment
+    Event:
+      type: object
+      description: >-
+        This object contains all information pertaining to an Event. Its
+        structure can vary.
+      additionalProperties: true
+    EmbeddedAlarms:
+      type: object
+      properties:
+        alarms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alarm'
+      required:
+        - alarms
+    EmbeddedEvents:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+      required:
+        - events
+    PageDetail:
+      type: object
+      properties:
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        number:
+          type: integer
+      required:
+        - size
+        - totalElements
+        - totalPages
+        - number
+    AlarmPage:
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PageLinks'
+        _embedded:
+          $ref: '#/components/schemas/EmbeddedAlarms'
+        page:
+          $ref: '#/components/schemas/PageDetail'
+      required:
+        - _links
+        - _embedded
+        - page
+    AlarmLabels:
+      type: object
+      properties:
+        alarm_labels:
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+        - alarm_labels
+    EventPage:
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PageLinks'
+        _embedded:
+          $ref: '#/components/schemas/EmbeddedEvents'
+        page:
+          $ref: '#/components/schemas/PageDetail'
+      required:
+        - _links
+        - _embedded
+        - page
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        scope:
+          type: string
+        jti:
+          type: string
+      required:
+        - access_token
+        - token_type
+        - expires_in
+        - scope
+        - jti
+    ErrorResponse:
+      type: object
+      properties:
+        result:
+          type: string
+        location:
+          type: string
+        error:
+          type: string
+      required:
+        - result
+        - location

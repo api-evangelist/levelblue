@@ -1,0 +1,74 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for USM Anywhere API Reference
+  version: 1.0.0
+extends: openapi/levelblue-usm-anywhere-openapi.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: openapi/levelblue-usm-anywhere-openapi.yml
+x-note: >-
+  Additive only. The harvested spec at openapi/levelblue-usm-anywhere-openapi.yml is never
+  mutated. Every operationId below is INTRODUCED by this overlay — the upstream spec
+  declares none — so downstream artifacts that need stable operation handles can bind to
+  these instead of method+path.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: levelblue
+    x-apievangelist-artifacts:
+      conventions: conventions/levelblue-conventions.yml
+      errors: errors/levelblue-problem-types.yml
+      authentication: authentication/levelblue-authentication.yml
+      scopes: scopes/levelblue-scopes.yml
+      lifecycle: lifecycle/levelblue-lifecycle.yml
+      data_model: data-model/levelblue-data-model.yml
+      webhooks: asyncapi/levelblue-usm-anywhere-webhooks.yml
+      skills: skills/_index.yml
+- target: $.info
+  update:
+    contact:
+      name: LevelBlue Support
+      url: https://www.levelblue.com/company/support
+    x-documentation: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients
+- target: $.paths['/oauth/token'].post
+  update:
+    operationId: getOAuthToken
+- target: $.paths['/alarms'].get
+  update:
+    operationId: getAlarmsPage
+    x-pagination:
+      style: page-number
+      zero_based: true
+      params: [page, size, sort]
+      response: page.totalPages
+- target: $.paths['/alarms/{alarmId}'].get
+  update:
+    operationId: getAlarmDetails
+- target: $.paths['/alarms/{alarmId}/labels'].get
+  update:
+    operationId: listAlarmLabels
+- target: $.paths['/alarms/{alarmId}/labels/{labelId}'].put
+  update:
+    operationId: addAlarmLabel
+    x-idempotent: true
+- target: $.paths['/alarms/{alarmId}/labels/{labelId}'].delete
+  update:
+    operationId: removeAlarmLabel
+    x-idempotent: true
+- target: $.paths['/events'].get
+  update:
+    operationId: getEventsPage
+    x-pagination:
+      style: page-number
+      zero_based: true
+      params: [page, size, sort]
+      response: page.totalPages
+- target: $.paths['/events/{eventId}'].get
+  update:
+    operationId: getEventDetails
+- target: $.components.schemas.ErrorResponse
+  update:
+    description: >-
+      USM Anywhere error envelope. Not RFC 9457 problem+json — the failure class is
+      carried by the HTTP status code.
+    x-error-catalog: errors/levelblue-problem-types.yml

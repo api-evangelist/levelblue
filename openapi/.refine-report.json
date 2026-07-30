@@ -1,0 +1,18 @@
+{
+  "provider": "levelblue",
+  "sources": [
+    "levelblue-alarms-api-openapi.yml",
+    "levelblue-events-api-openapi.yml",
+    "levelblue-oauth-api-openapi.yml"
+  ],
+  "outputs": [
+    "levelblue-alarms-api-openapi.yml",
+    "levelblue-events-api-openapi.yml",
+    "levelblue-oauth-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

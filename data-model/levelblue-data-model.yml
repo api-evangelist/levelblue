@@ -1,0 +1,126 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/levelblue-usm-anywhere-openapi.yml
+
+entities:
+- name: Alarm
+  schema: Alarm
+  identifier: uuid
+  id_format: uuid
+  description: >-
+    A correlated security alarm raised by USM Anywhere, carrying priority, status,
+    the rule that fired, its contributing events and its source/destination endpoints.
+  key_fields: [uuid, priority, suppressed, has_alarm, needs_enrichment, alarm_labels, packet_data]
+  status_values: [open, closed, in_review]
+  priority_labels: [low, medium, high]
+  relationships:
+  - type: has_many
+    target: AlarmEvent
+    via: events
+  - type: has_many
+    target: AlarmSource
+    via: sources
+  - type: has_many
+    target: AlarmDestination
+    via: destinations
+  - type: has_many
+    target: Label
+    via: alarm_labels
+- name: AlarmEvent
+  schema: AlarmEvent
+  identifier: uuid
+  id_format: uuid
+  description: >-
+    A normalized event as embedded inside an alarm, with flattened source_* and
+    destination_* endpoint attributes.
+  relationships:
+  - type: belongs_to
+    target: Alarm
+    via: events
+  - type: has_one
+    target: EventLinks
+    via: _links
+- name: Event
+  schema: Event
+  identifier: uuid
+  id_format: uuid
+  description: >-
+    A raw normalized event collected from a data source. Schema is
+    additionalProperties:true — the field set varies by plugin/data source.
+  key_fields: [uuid, account_name, event_name, timestamp_occured]
+  open_schema: true
+  relationships: []
+- name: AlarmSource
+  schema: AlarmSource
+  identifier: asset_id
+  description: The originating endpoint that contributed events to an alarm.
+  key_fields: [address, hostname, fqdn, asset_id, organisation, country, canonical, name, event_count]
+  relationships:
+  - type: belongs_to
+    target: Alarm
+    via: sources
+- name: AlarmDestination
+  schema: AlarmDestination
+  identifier: asset_id
+  description: The targeted endpoint of the activity that raised an alarm.
+  key_fields: [address, hostname, fqdn, asset_id, organisation, country, canonical, name, event_count]
+  relationships:
+  - type: belongs_to
+    target: Alarm
+    via: destinations
+- name: Label
+  schema: null
+  identifier: labelId
+  description: >-
+    A user-assigned tag associated with an alarm. Labels have no standalone schema in the
+    v2.0 spec — they surface only as ID strings via the alarm label endpoints.
+  relationships:
+  - type: belongs_to
+    target: Alarm
+    via: alarm_labels
+- name: Asset
+  schema: null
+  identifier: asset_id
+  description: >-
+    A monitored host/device. Referenced by ID from alarm sources and destinations but not
+    exposed as an addressable resource in the v2.0 REST API.
+  addressable: false
+- name: Sensor
+  schema: null
+  identifier: sensor_uuid
+  id_format: uuid
+  description: >-
+    A USM Anywhere collection sensor. Referenced as a filter parameter
+    (alarm_sensor_sources, sensor_uuid) but not exposed as a resource in v2.0.
+  addressable: false
+
+envelopes:
+- name: AlarmPage
+  wraps: Alarm
+  via: _embedded.alarms
+  pagination: PageDetail + PageLinks
+- name: EventPage
+  wraps: Event
+  via: _embedded.events
+  pagination: PageDetail + PageLinks
+- name: AlarmLabels
+  wraps: Label
+  via: alarm_labels
+
+shared_types:
+- name: HalLink
+  used_by: [AlarmLinks, AlarmSouceLinks, AlarmDestinationLinks, EventLinks, PageLinks]
+- name: PageDetail
+  used_by: [AlarmPage, EventPage]
+- name: TokenResponse
+  used_by: ['POST /oauth/token']
+- name: ErrorResponse
+  used_by: [401, 404]
+
+notes:
+- >-
+    Relationships are traversed by embedding (_embedded / nested arrays) rather than by
+    ID-reference lookups; the API exposes no endpoints for Asset, Sensor or Label as
+    first-class resources.
+- >-
+    AlarmSouceLinks is spelled with a typo in the upstream spec and is preserved verbatim.

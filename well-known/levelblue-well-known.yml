@@ -1,0 +1,39 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.levelblue.com/.well-known/security.txt
+host: https://www.levelblue.com
+documents:
+- path: /.well-known/security.txt
+  status: 200
+  file: levelblue-security.txt
+  standard: RFC 9116
+- path: /.well-known/openid-configuration
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  status: 404
+- path: /.well-known/api-catalog
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404
+other_hosts:
+- host: https://docs.levelblue.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 200
+    file: ../llms/levelblue-llms.txt
+    note: docs host publishes an llms.txt index (127+ pages)
+notes:
+- The USM Anywhere API host is per-tenant (https://<subdomain>.alienvault.cloud),
+  so /.well-known/ discovery is not probeable without a customer subdomain.
+- https://otx.alienvault.com/.well-known/security.txt returns HTTP 200 but serves the
+  Angular single-page-app shell (soft 404), not an RFC 9116 document; not captured.

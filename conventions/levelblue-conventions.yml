@@ -1,0 +1,124 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.levelblue.com/documentation/api-reference/v2.yaml
+docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients
+api: openapi/levelblue-usm-anywhere-openapi.yml
+
+authentication:
+  style: oauth2-client-credentials
+  detail: >-
+    Create a client ID and secret on the API Clients tab of Profile Settings in the
+    USM Anywhere web UI, then POST to /oauth/token using HTTP Basic auth (client ID as
+    username, client secret as password) with grant_type=client_credentials. The
+    response returns a JWT bearer token used as Authorization: Bearer <token> on all
+    subsequent calls.
+  token_lifetime_seconds: 899
+  evidence: openapi /oauth/token securityScheme basicAuth + bearerAuth (bearerFormat JWT)
+  see: authentication/levelblue-authentication.yml
+
+pagination:
+  style: page-number
+  zero_based: true
+  params:
+  - name: page
+    description: The page number of results to return (zero-based).
+  - name: size
+    description: The number of results to return per page.
+  - name: sort
+    description: The parameter and direction to sort results by (e.g. timestamp_occured,asc).
+  response_fields:
+  - page.size
+  - page.totalElements
+  - page.totalPages
+  - page.number
+  hypermedia:
+    format: HAL
+    link_fields: [_links.self, _links.first, _links.prev, _links.next, _links.last]
+    embedded_field: _embedded
+  evidence: openapi AlarmPage / EventPage schemas (PageLinks + PageDetail + _embedded)
+
+filtering:
+  style: query-parameters
+  detail: >-
+    Collection endpoints filter with typed query parameters rather than a query DSL —
+    e.g. status, suppressed, priority_label, rule_intent, rule_method, rule_strategy,
+    alarm_sensor_sources on /alarms; account_name (required), plugin, event_name,
+    source_name, sensor_uuid, source_username on /events.
+  time_range_params: [timestamp_occured_gte, timestamp_occured_lte]
+  time_format: epoch milliseconds
+  evidence: openapi /alarms and /events parameters
+
+idempotency:
+  idempotency_contract_published: false
+  http_semantics_idempotent: true
+  mechanism: idempotent-by-design (HTTP PUT/DELETE on addressable label resources)
+  detail: >-
+    USM Anywhere does not publish an Idempotency-Key header. The only write operations
+    in the v2.0 API are PUT /alarms/{alarmId}/labels/{labelId} and
+    DELETE /alarms/{alarmId}/labels/{labelId} — both address the association directly by
+    ID and are naturally idempotent per RFC 9110: repeating either call leaves the same
+    alarm/label association state and returns the same 200/404, so client retries after a
+    timeout are safe without a dedupe key.
+  idempotency_key_header: null
+  retention: null
+  safe_to_retry: [GET, PUT, DELETE]
+  evidence: openapi paths /alarms/{alarmId}/labels/{labelId} (put, delete)
+
+versioning:
+  scheme: uri-path
+  current: '2.0'
+  path_segment: /api/2.0
+  detail: >-
+    The API version is pinned in the base path (https://<subdomain>.alienvault.cloud/api/2.0).
+    The webhook event-ingestion endpoint is versioned separately at /api/1.0.
+  see: lifecycle/levelblue-lifecycle.yml
+
+error_envelope:
+  format: custom-json
+  rfc9457: false
+  media_type: application/json
+  schema: ErrorResponse
+  fields:
+  - name: result
+    required: true
+  - name: location
+    required: true
+  - name: error
+    required: false
+  detail: >-
+    Errors are returned as JSON with the failure signalled by the HTTP status code, not
+    an RFC 9457 problem+json document.
+  see: errors/levelblue-problem-types.yml
+
+rate_limiting:
+  documented: false
+  headers: []
+  detail: >-
+    No rate-limit policy or response headers are documented in the v2.0 API reference or
+    the USM Anywhere user guide. The webhook ingestion endpoint documents a payload
+    ceiling (10,000 events per POST) rather than a request-rate limit.
+
+request_tracing:
+  request_id_header: null
+  documented: false
+
+metadata:
+  user_defined_fields: false
+  labels:
+    detail: Alarms carry user-assigned labels, managed via the /alarms/{alarmId}/labels endpoints.
+
+field_expansion:
+  supported: false
+  note: >-
+    Collection responses embed full child objects under _embedded rather than exposing an
+    expand/fields parameter. The Event schema is additionalProperties:true — its shape
+    varies by data source.
+
+content_types:
+  request: [application/x-www-form-urlencoded, application/json]
+  response: [application/json]
+  compression: 'gzip supported on webhook ingestion (Content-Encoding: gzip)'
+
+editions:
+  detail: The REST API is available in the Standard and Premium editions of USM Anywhere.
+  source: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients

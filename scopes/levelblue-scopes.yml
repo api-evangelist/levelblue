@@ -1,0 +1,54 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/levelblue-usm-anywhere-openapi.yml
+docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients
+
+grant:
+  type: client_credentials
+  token_endpoint: https://your-subdomain.alienvault.cloud/api/2.0/oauth/token
+  client_authentication: http-basic (client ID as username, client secret as password)
+  token_format: JWT
+  expires_in: 899
+
+schemes:
+- name: bearerAuth
+  source: openapi/levelblue-usm-anywhere-openapi.yml
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  note: >-
+    The spec models the access token as an http/bearer scheme rather than an OAuth2
+    securityScheme, so no flows{} scopes map is declared. The scopes below are read from
+    the documented /oauth/token success response.
+
+scopes:
+- scope: trust
+  description: >-
+    Present in the documented token response. LevelBlue does not publish a scope
+    reference defining its effect.
+  sources: ['openapi/levelblue-usm-anywhere-openapi.yml#POST /oauth/token (200 example)']
+- scope: read
+  description: >-
+    Read access to USM Anywhere resources (alarms, events). Not separately documented.
+  sources: ['openapi/levelblue-usm-anywhere-openapi.yml#POST /oauth/token (200 example)']
+- scope: write
+  description: >-
+    Write access to USM Anywhere resources (e.g. adding and removing alarm labels). Not
+    separately documented.
+  sources: ['openapi/levelblue-usm-anywhere-openapi.yml#POST /oauth/token (200 example)']
+
+authorization_model:
+  note: >-
+    Effective API authorization is governed by the USM Anywhere role assigned to the API
+    client, not by requesting narrower scopes. Documented roles are Read-Only,
+    Investigator, Analyst and Manager; the API Clients page itself requires the Manager
+    role.
+  roles: [Read-Only, Investigator, Analyst, Manager]
+  source: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients
+
+gaps:
+- >-
+    No scopes/permissions reference page is published. The three scope values above are
+    the literal contents of the `scope` field in the spec's own token-response example
+    ("trust read write") — they are not documented individually, and there is no
+    documented way to request a subset.

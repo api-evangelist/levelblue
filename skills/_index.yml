@@ -1,0 +1,32 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/levelblue-usm-anywhere-openapi.yml
+note: >-
+  The upstream USM Anywhere v2.0 spec declares no operationIds, so each skill grounds its
+  steps in the verbatim method + path pairs published in the spec. No operation below is
+  invented — all eight are the complete operation set of the published API.
+
+skills:
+- file: levelblue-triage-alarms.md
+  name: Triage USM Anywhere alarms
+  description: >-
+    Authenticate, pull a filtered page of open alarms, drill into detail, and label alarms
+    as they are worked.
+  api: openapi/levelblue-usm-anywhere-openapi.yml
+  operations:
+  - POST /oauth/token
+  - GET /alarms
+  - GET /alarms/{alarmId}
+  - GET /alarms/{alarmId}/labels
+  - PUT /alarms/{alarmId}/labels/{labelId}
+  - DELETE /alarms/{alarmId}/labels/{labelId}
+- file: levelblue-search-events.md
+  name: Search and export USM Anywhere events
+  description: >-
+    Filter normalized events by account, plugin, source and time window, page through them
+    safely, and pull full event detail for investigation or export.
+  api: openapi/levelblue-usm-anywhere-openapi.yml
+  operations:
+  - POST /oauth/token
+  - GET /events
+  - GET /events/{eventId}

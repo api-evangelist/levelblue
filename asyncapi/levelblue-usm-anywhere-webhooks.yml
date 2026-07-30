@@ -1,0 +1,69 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/cloud-connector/webhook_connector/webhook_overview
+spec_type: Webhooks
+asyncapi_published: false
+
+summary: >-
+  USM Anywhere webhook connectors are INBOUND — they expose an authenticated public HTTP
+  endpoint that a third-party tool POSTs events to, tagging them with a data source and
+  injecting them into USM Anywhere for correlation. LevelBlue does not publish an outbound
+  webhook subscription catalog (there is no documented "subscribe to alarm.created"
+  surface), and no AsyncAPI document is published.
+
+direction: inbound
+transport: https
+
+endpoint:
+  method: POST
+  path: /api/1.0/webhook/push
+  url_template: https://<base_url>/api/1.0/webhook/push
+  content_type: application/json
+  compression: gzip (via Content-Encoding header)
+  docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/cloud-connector/webhook_connector/push_events
+
+authentication:
+  type: apiKey
+  name: API_KEY
+  in: header
+  also_accepted_in: query
+  detail: >-
+    An API key and endpoint are issued when the webhook connector is created in USM
+    Anywhere. The key may be sent as an API_KEY request header or as an API_KEY URL
+    parameter. Keys are rotatable from the connector's Reset API Keys action.
+  rotation_docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/cloud-connector/webhook_connector/reset_api_key
+
+payloads:
+- name: single event
+  shape: a single JSON object
+- name: batch of events
+  shape: a JSON array of event objects
+  max_items: 10000
+
+connector_lifecycle:
+  states:
+  - name: Offline
+    meaning: Initial status after the connector is created and added to the cloud connector list.
+  - name: Active
+    meaning: The connector's API has been used to push an event.
+  - name: Idle
+    meaning: The connector's API has not received data for the past 12 hours.
+  - name: Not Receiving Data
+    meaning: The connector's API has not received data for the past 24 hours.
+  observability:
+    detail: >-
+      USM Anywhere renders event-volume stats per connector over a 24-hour window
+      (refreshed hourly) or a 7-day window (refreshed daily).
+    docs: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/cloud-connector/webhook_connector/webhook_status_and_stats
+
+operations_docs:
+  create: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/cloud-connector/webhook_connector/create_new_webhook
+  edit: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/cloud-connector/webhook_connector/edit_webhook
+  delete: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/cloud-connector/webhook_connector/delete_webhook
+
+gaps:
+- No AsyncAPI or event-schema document is published for the ingested event payload.
+- >-
+    Event payload fields are caller-defined and tagged to a data source on arrival; the
+    Event schema in the REST spec is correspondingly additionalProperties:true.
+- No outbound/subscription webhook catalog (alarm or event notifications) is documented.

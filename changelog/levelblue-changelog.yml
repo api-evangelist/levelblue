@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/index
+
+scheme: product-announcements
+format: narrative posts in the Success Center (not a dated, machine-readable API changelog)
+current_api_version: '2.0'
+
+channels:
+- product: USM Anywhere
+  name: USM Anywhere Release Notes
+  url: https://success.alienvault.com/s/topic/0TO0Z000000oRSNWA2/anywhere-product-announcements
+  subscribe: >-
+    Followers of the Success Center topic can opt in to email notification on every post.
+- product: USM Central
+  name: USM Central Release Notes
+  url: https://success.alienvault.com/s/topic/0TO0Z000000oRSWWA2/central-product-announcements
+  subscribe: >-
+    Followers of the Success Center topic can opt in to email notification on every post.
+
+entries: []
+
+gaps:
+- >-
+    LevelBlue publishes no dedicated API changelog. Release notes live behind the
+    Success Center (success.alienvault.com / success.levelblue.com) as product
+    announcement topics rather than as a versioned, dated feed, so no structured
+    entries[] could be harvested without an authenticated customer session.
+- >-
+    The API reference itself carries no version history — only the current v2.0 surface is
+    published at https://docs.levelblue.com/documentation/api-reference/v2.yaml.

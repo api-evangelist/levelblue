@@ -1,0 +1,71 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/levelblue-usm-anywhere-openapi.yml
+
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: "openapi: '3.0.0' in the published USM Anywhere API reference"
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: >-
+    POST /oauth/token with grant_type=client_credentials over HTTP Basic client
+    authentication (RFC 6749 §4.4); docs state "USM Anywhere uses OAuth 2.0 to
+    authenticate against the REST APIs"
+- id: rfc7519-jwt
+  conforms: true
+  evidence: securitySchemes.bearerAuth bearerFormat JWT
+- id: hal-hypermedia
+  conforms: true
+  evidence: >-
+    Responses use HAL conventions — _links (self/first/prev/next/last) and _embedded —
+    per the AlarmPage, EventPage and PageLinks schemas
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors return application/json with a custom {result, location, error} envelope, not
+    application/problem+json
+- id: oidc
+  conforms: false
+  evidence: no /.well-known/openid-configuration on any probed host (404)
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns 404
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: https://www.levelblue.com/.well-known/security.txt returns a valid RFC 9116 document
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no Sunset/Deprecation header support documented
+- id: rfc8288-web-linking
+  conforms: false
+  evidence: pagination links are carried in the HAL _links body object, not a Link header
+- id: json-api
+  conforms: false
+  evidence: media type is application/json with HAL shaping, not application/vnd.api+json
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    A webhook event-ingestion surface exists (POST /api/1.0/webhook/push) but no AsyncAPI
+    document is published
+- id: pci-dss
+  conforms: true
+  scope: product-capability
+  evidence: >-
+    USM Anywhere ships PCI DSS compliance views, asset-group scoping and PCI report
+    templates — this is a compliance capability the product delivers for customers, not a
+    certification claim about the API itself
+  source: https://docs.levelblue.com/documentation/usm-anywhere/user-guide/compliance/assets-pci
+- id: fedramp
+  conforms: true
+  scope: product-authorization
+  evidence: >-
+    LevelBlue TDR for Gov is documented as a FedRAMP-authorized threat detection platform
+    deployed on AWS GovCloud
+  source: https://docs.levelblue.com/documentation
+
+notes:
+- >-
+    Standards marked scope:product-capability / product-authorization describe the
+    LevelBlue product's compliance posture as documented, and are distinct from the
+    wire-level conformance of the v2.0 REST API.

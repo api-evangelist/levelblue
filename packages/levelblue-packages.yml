@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: searched
+source: https://otx.alienvault.com/assets/static/external_api.html
+
+packages:
+- language: python
+  registry: pypi
+  name: OTXv2
+  url: https://pypi.org/project/OTXv2/
+  install: pip install OTXv2
+  repository: https://github.com/AlienVault-OTX/OTX-Python-SDK
+  version: 1.5.12
+  official: true
+  api: LevelBlue Open Threat Exchange (OTX) DirectConnect API
+  publisher: AlienVault Team
+  note: >-
+    First-party OTX DirectConnect SDK. AlienVault/OTX is the LevelBlue threat-intelligence
+    property (otx.alienvault.com is branded "LevelBlue - Open Threat Exchange"). Last
+    released 2021-04-02.
+- language: java
+  registry: github
+  name: OTX-Java-SDK
+  url: https://github.com/AlienVault-OTX/OTX-Java-SDK
+  install: null
+  repository: https://github.com/AlienVault-OTX/OTX-Java-SDK
+  official: true
+  api: LevelBlue Open Threat Exchange (OTX) DirectConnect API
+  note: >-
+    Source-only distribution — not published to Maven Central (a Maven Central search for
+    "otx" returns 0 results). The OTX API docs state the DirectConnect SDK is available in
+    Java and Python.
+
+registries_checked:
+- registry: pypi
+  result: OTXv2 found (official)
+- registry: npm
+  result: >-
+    no first-party package — registry.npmjs.org/levelblue, /alienvault and /otx-js all
+    return 404
+- registry: maven-central
+  result: no results for "otx"; the Java SDK is distributed via GitHub only
+- registry: nuget
+  result: none found
+- registry: pkg.go.dev
+  result: none found
+- registry: rubygems
+  result: none found
+- registry: packagist
+  result: none found
+- registry: crates.io
+  result: none found
+
+gaps:
+- >-
+    No first-party client library is published for the USM Anywhere v2.0 REST API. The
+    USM Anywhere documentation references only third-party SDKs (AWS, Azure, Google Cloud)
+    used for log collection, never a LevelBlue SDK.
+- >-
+    The only official LevelBlue client libraries are for the OTX DirectConnect API, and
+    the Python SDK has not been released since 2021.

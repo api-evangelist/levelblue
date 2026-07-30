@@ -1,0 +1,51 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.levelblue.com/documentation/api-reference/v2.yaml
+
+versioning:
+  scheme: uri-path
+  current: '2.0'
+  base_path: /api/2.0
+  docs: https://docs.levelblue.com/api-reference/alarms/get-a-page-of-alarms
+  other_versions:
+  - version: '1.0'
+    base_path: /api/1.0
+    scope: webhook event ingestion (POST /api/1.0/webhook/push)
+
+deprecation:
+  policy_url: null
+  sunset_header: false
+  documented: false
+  note: >-
+    No API deprecation policy, Sunset/Deprecation header support (RFC 8594), or
+    end-of-life schedule is published for the USM Anywhere REST API. Deprecations are
+    announced narratively through the Success Center product-announcement topics.
+
+status_page:
+  url: https://status.alienvault.cloud/
+  product: USM Anywhere
+  status: 200
+additional_status_pages:
+- url: https://status-central.alienvault.cloud/
+  product: USM Central
+  status: 200
+
+release_notes:
+- product: USM Anywhere
+  url: https://success.alienvault.com/s/topic/0TO0Z000000oRSNWA2/anywhere-product-announcements
+- product: USM Central
+  url: https://success.alienvault.com/s/topic/0TO0Z000000oRSWWA2/central-product-announcements
+
+sla:
+  url: null
+  uptime_target: null
+  note: No public uptime SLA is published; service commitments are contractual per MSSP engagement.
+
+support:
+  success_center: https://success.levelblue.com/s/
+  support_page: https://www.levelblue.com/company/support
+
+deprecated_operations: []
+
+editions:
+  note: The REST API is available in the Standard and Premium editions of USM Anywhere.
