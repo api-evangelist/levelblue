@@ -113,6 +113,10 @@ apis:
   - type: DataModel
     url: data-model/levelblue-data-model.yml
 common:
+- type: MCPServer
+  url: mcp/levelblue-mcp.yml
+- type: Overlay
+  url: overlays/levelblue-usm-anywhere-overlay.yaml
 - type: DeveloperPortal
   url: https://docs.levelblue.com/documentation
 - type: Documentation
