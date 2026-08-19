@@ -2,18 +2,16 @@ generated: '2026-07-19'
 method: derived
 source: openapi/levelblue-usm-anywhere-openapi.yml
 status: candidate
-
 search:
   official_server_found: false
   checked:
   - https://docs.levelblue.com/llms.txt (full docs index — no MCP page)
   - https://docs.levelblue.com/llms-full.txt (no MCP, Model Context Protocol or agent references)
-  - LevelBlue documentation center product list (USM Anywhere, USM Central, TDR for Gov, Automated Policy Manager)
-  note: >-
-    LevelBlue publishes no hosted or remote MCP server for USM Anywhere as of this pass.
-    The tools below are a CANDIDATE surface derived from the published v2.0 OpenAPI — they
-    are a design proposal, not a LevelBlue product.
-
+  - LevelBlue documentation center product list (USM Anywhere, USM Central, TDR for Gov, Automated Policy
+    Manager)
+  note: LevelBlue publishes no hosted or remote MCP server for USM Anywhere as of this pass. The tools
+    below are a CANDIDATE surface derived from the published v2.0 OpenAPI — they are a design proposal,
+    not a LevelBlue product.
 server:
   name: levelblue-usm-anywhere
   transport: http
@@ -21,48 +19,47 @@ server:
   base_url_template: https://<subdomain>.alienvault.cloud/api/2.0
   auth:
     type: oauth2-client-credentials
-    detail: >-
-      Exchange client ID/secret for a JWT bearer token at POST /oauth/token before any
-      tool call; tokens expire in 899 seconds and must be refreshed.
-
+    detail: Exchange client ID/secret for a JWT bearer token at POST /oauth/token before any tool call;
+      tokens expire in 899 seconds and must be refreshed.
 tools:
 - name: list_alarms
-  description: >-
-    List a page of alarms, filtered by status, priority, suppression, rule intent/method/
-    strategy, sensor UUID and occurrence time range.
+  description: List a page of alarms, filtered by status, priority, suppression, rule intent/method/ strategy,
+    sensor UUID and occurrence time range.
   read_only: true
-  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#GET /alarms'
+  source_operation: openapi/levelblue-usm-anywhere-openapi.yml#GET /alarms
 - name: get_alarm
-  description: Retrieve the full details of a single alarm by UUID, including its contributing events, sources and destinations.
+  description: Retrieve the full details of a single alarm by UUID, including its contributing events,
+    sources and destinations.
   read_only: true
-  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#GET /alarms/{alarmId}'
+  source_operation: openapi/levelblue-usm-anywhere-openapi.yml#GET /alarms/{alarmId}
 - name: list_alarm_labels
   description: List the label IDs associated with an alarm.
   read_only: true
-  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#GET /alarms/{alarmId}/labels'
+  source_operation: openapi/levelblue-usm-anywhere-openapi.yml#GET /alarms/{alarmId}/labels
 - name: add_alarm_label
   description: Associate a label with an alarm.
   read_only: false
-  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#PUT /alarms/{alarmId}/labels/{labelId}'
+  source_operation: openapi/levelblue-usm-anywhere-openapi.yml#PUT /alarms/{alarmId}/labels/{labelId}
 - name: remove_alarm_label
   description: Disassociate a label from an alarm.
   read_only: false
-  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#DELETE /alarms/{alarmId}/labels/{labelId}'
+  source_operation: openapi/levelblue-usm-anywhere-openapi.yml#DELETE /alarms/{alarmId}/labels/{labelId}
 - name: list_events
-  description: >-
-    List a page of normalized events for an account, filtered by plugin, event name,
-    source name, sensor UUID, source username and occurrence time range.
+  description: List a page of normalized events for an account, filtered by plugin, event name, source
+    name, sensor UUID, source username and occurrence time range.
   read_only: true
-  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#GET /events'
+  source_operation: openapi/levelblue-usm-anywhere-openapi.yml#GET /events
 - name: get_event
   description: Retrieve the full details of a single event by UUID.
   read_only: true
-  source_operation: 'openapi/levelblue-usm-anywhere-openapi.yml#GET /events/{eventId}'
-
+  source_operation: openapi/levelblue-usm-anywhere-openapi.yml#GET /events/{eventId}
 notes:
-- >-
-    The upstream spec declares no operationIds, so source_operation references use
-    method + path.
-- >-
-    Pagination is page/size/sort with HAL _links; an MCP implementation should surface
-    page.totalPages and follow _links.next rather than re-deriving offsets.
+- The upstream spec declares no operationIds, so source_operation references use method + path.
+- Pagination is page/size/sort with HAL _links; an MCP implementation should surface page.totalPages and
+  follow _links.next rather than re-deriving offsets.
+deployment:
+  mode: none
+  verified: derived
+  tools: 7
+  checked: '2026-08-12'
+  source: catalog MCP census

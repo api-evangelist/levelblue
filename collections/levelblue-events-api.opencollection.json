@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USM Anywhere™ API Reference Alarms Events API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a page of events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-subdomain.alienvault.cloud/api/2.0/events",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of results to return (zero-based)."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return per page."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The parameter and direction to sort results by."
+              },
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "query",
+                "description": "The account name."
+              },
+              {
+                "name": "suppressed",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the suppressed flag."
+              },
+              {
+                "name": "plugin",
+                "value": "",
+                "type": "query",
+                "description": "The plugin name."
+              },
+              {
+                "name": "event_name",
+                "value": "",
+                "type": "query",
+                "description": "The name of the event."
+              },
+              {
+                "name": "source_name",
+                "value": "",
+                "type": "query",
+                "description": "The source name."
+              },
+              {
+                "name": "sensor_uuid",
+                "value": "",
+                "type": "query",
+                "description": "The UUID of the sensor."
+              },
+              {
+                "name": "source_username",
+                "value": "",
+                "type": "query",
+                "description": "The username of the person that triggered the event."
+              },
+              {
+                "name": "timestamp_occured_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filter for events that occurred at or after this timestamp (epoch milliseconds)."
+              },
+              {
+                "name": "timestamp_occured_lte",
+                "value": "",
+                "type": "query",
+                "description": "Filter for events that occurred at or before this timestamp (epoch milliseconds)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of events, which can be filtered by various parameters."
+        },
+        {
+          "info": {
+            "name": "Get Event Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-subdomain.alienvault.cloud/api/2.0/events/:eventId",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the event to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves the full details for a single event by its UUID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

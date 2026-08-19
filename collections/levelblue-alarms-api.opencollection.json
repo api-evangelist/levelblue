@@ -1,0 +1,197 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USM Anywhere™ API Reference Alarms API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Alarms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a page of alarms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-subdomain.alienvault.cloud/api/2.0/alarms",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of results to return (zero-based)."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results to return per page."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The parameter and direction to sort results by."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the status of the alarm."
+              },
+              {
+                "name": "suppressed",
+                "value": "",
+                "type": "query",
+                "description": "Filter alarms by the suppressed flag."
+              },
+              {
+                "name": "rule_intent",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the intent of the rule that triggered the alarm."
+              },
+              {
+                "name": "rule_method",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the method of the rule that triggered the alarm."
+              },
+              {
+                "name": "rule_strategy",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the strategy of the rule that triggered the alarm."
+              },
+              {
+                "name": "priority_label",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the priority of the alarm."
+              },
+              {
+                "name": "alarm_sensor_sources",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the UUID of the sensor."
+              },
+              {
+                "name": "timestamp_occured_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filter for alarms that occurred at or after this timestamp (epoch milliseconds)."
+              },
+              {
+                "name": "timestamp_occured_lte",
+                "value": "",
+                "type": "query",
+                "description": "Filter for alarms that occurred at or before this timestamp (epoch milliseconds)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of alarms. Can be filtered by various parameters."
+        },
+        {
+          "info": {
+            "name": "Get Alarm Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-subdomain.alienvault.cloud/api/2.0/alarms/:alarmId",
+            "params": [
+              {
+                "name": "alarmId",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the alarm to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves the full details for a single alarm by its UUID."
+        },
+        {
+          "info": {
+            "name": "List labels for an alarm",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-subdomain.alienvault.cloud/api/2.0/alarms/:alarmId/labels",
+            "params": [
+              {
+                "name": "alarmId",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the alarm."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of label IDs associated with a specific alarm."
+        },
+        {
+          "info": {
+            "name": "Add a label to an alarm",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://your-subdomain.alienvault.cloud/api/2.0/alarms/:alarmId/labels/:labelId",
+            "params": [
+              {
+                "name": "alarmId",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the alarm."
+              },
+              {
+                "name": "labelId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the label to add."
+              }
+            ]
+          },
+          "docs": "Associates a label with a specific alarm."
+        },
+        {
+          "info": {
+            "name": "Remove a label from an alarm",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://your-subdomain.alienvault.cloud/api/2.0/alarms/:alarmId/labels/:labelId",
+            "params": [
+              {
+                "name": "alarmId",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the alarm."
+              },
+              {
+                "name": "labelId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the label to remove."
+              }
+            ]
+          },
+          "docs": "Disassociates a label from a specific alarm."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

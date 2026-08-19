@@ -1,0 +1,385 @@
+{
+  "item": [
+    {
+      "id": "73e4b476-4ac6-4c8a-a271-cd9a65558952",
+      "name": "Events",
+      "description": {
+        "content": "Endpoints for managing and searching events.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "25b9f190-20aa-4d30-b321-db42702e3049",
+          "name": "Get a page of events",
+          "request": {
+            "name": "Get a page of events",
+            "description": {
+              "content": "Retrieves a paginated list of events, which can be filtered by various parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page number of results to return (zero-based)."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>",
+                  "description": "The number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "The parameter and direction to sort results by."
+                },
+                {
+                  "disabled": false,
+                  "key": "account_name",
+                  "value": "<string>",
+                  "description": "(Required) The account name."
+                },
+                {
+                  "disabled": false,
+                  "key": "suppressed",
+                  "value": "<boolean>",
+                  "description": "Filter events by the suppressed flag."
+                },
+                {
+                  "disabled": false,
+                  "key": "plugin",
+                  "value": "<string>",
+                  "description": "The plugin name."
+                },
+                {
+                  "disabled": false,
+                  "key": "event_name",
+                  "value": "<string>",
+                  "description": "The name of the event."
+                },
+                {
+                  "disabled": false,
+                  "key": "source_name",
+                  "value": "<string>",
+                  "description": "The source name."
+                },
+                {
+                  "disabled": false,
+                  "key": "sensor_uuid",
+                  "value": "<uuid>",
+                  "description": "The UUID of the sensor."
+                },
+                {
+                  "disabled": false,
+                  "key": "source_username",
+                  "value": "<string>",
+                  "description": "The username of the person that triggered the event."
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_occured_gte",
+                  "value": "<long>",
+                  "description": "Filter for events that occurred at or after this timestamp (epoch milliseconds)."
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_occured_lte",
+                  "value": "<long>",
+                  "description": "Filter for events that occurred at or before this timestamp (epoch milliseconds)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "24f054fe-c797-4d00-a275-f9cbea706684",
+              "name": "A paginated list of events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "timestamp_occured,asc"
+                    },
+                    {
+                      "key": "account_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "suppressed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "plugin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "event_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sensor_uuid",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "source_username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_occured_gte",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "timestamp_occured_lte",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"https://mysubdomain.alienvault.cloud/api/2.0/events\"\n    }\n  },\n  \"_embedded\": {\n    \"events\": [\n      {\n        \"uuid\": \"39a6918f-33f2-ec9b-0fcc-42bb90f10a1f\"\n      }\n    ]\n  },\n  \"page\": {\n    \"size\": 20,\n    \"totalElements\": 3506,\n    \"totalPages\": 176,\n    \"number\": 0\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6fffdf14-6b5f-4854-abb4-d2a9730d5e71",
+          "name": "Get Event Details",
+          "request": {
+            "name": "Get Event Details",
+            "description": {
+              "content": "Retrieves the full details for a single event by its UUID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                ":eventId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "eventId",
+                  "description": "(Required) The UUID of the event to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7ff97d2-7d1e-4976-93db-931ab5718ff9",
+              "name": "Event details retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "eventId",
+                      "description": "(Required) The UUID of the event to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"39a6918f-33f2-ec9b-0fcc-42bb90f10a1f\",\n  \"account_name\": \"generic-account\",\n  \"event_name\": \"PutObject\",\n  \"timestamp_occured\": \"1528817037000\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"https://mysubdomain.aveng.us/api/2.0/events/39a6918f-33f2-ec9b-0fcc-42bb90f10a1f\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd756acf-fb05-4ae7-96b2-10866a8fc86d",
+              "name": "Event not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":eventId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "eventId",
+                      "description": "(Required) The UUID of the event to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://your-subdomain.alienvault.cloud/api/2.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cf82379c-0abe-4a31-9c24-6e3e2e537d5d",
+    "name": "USM Anywhere™ API Reference Alarms Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AT&T Cybersecurity publishes REST APIs for USM Anywhere that provide a programmatic interface that will allow you to access your data directly from your own applications and extensions.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USM Anywhere™ API Reference Alarms OAuth API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get OAuth Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-subdomain.alienvault.cloud/api/2.0/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "grant_type",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Authenticate your client to receive an OAuth Bearer token. This endpoint uses Basic Authentication with your client ID as the username and the client secret as the password."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

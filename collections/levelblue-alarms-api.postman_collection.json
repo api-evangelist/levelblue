@@ -1,0 +1,878 @@
+{
+  "item": [
+    {
+      "id": "23f6ec63-b7a1-4667-a9b6-fe8d1d1728ab",
+      "name": "Alarms",
+      "description": {
+        "content": "Endpoints for managing and searching alarm messages.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "46321bd3-fbcc-4c94-9c35-38ff4510b4e2",
+          "name": "Get a page of alarms",
+          "request": {
+            "name": "Get a page of alarms",
+            "description": {
+              "content": "Retrieves a paginated list of alarms. Can be filtered by various parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "alarms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page number of results to return (zero-based)."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>",
+                  "description": "The number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "The parameter and direction to sort results by."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by the status of the alarm."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by the status of the alarm."
+                },
+                {
+                  "disabled": false,
+                  "key": "suppressed",
+                  "value": "<boolean>",
+                  "description": "Filter alarms by the suppressed flag."
+                },
+                {
+                  "disabled": false,
+                  "key": "rule_intent",
+                  "value": "<string>",
+                  "description": "Filter by the intent of the rule that triggered the alarm."
+                },
+                {
+                  "disabled": false,
+                  "key": "rule_method",
+                  "value": "<string>",
+                  "description": "Filter by the method of the rule that triggered the alarm."
+                },
+                {
+                  "disabled": false,
+                  "key": "rule_strategy",
+                  "value": "<string>",
+                  "description": "Filter by the strategy of the rule that triggered the alarm."
+                },
+                {
+                  "disabled": false,
+                  "key": "priority_label",
+                  "value": "<string>",
+                  "description": "Filter by the priority of the alarm."
+                },
+                {
+                  "disabled": false,
+                  "key": "priority_label",
+                  "value": "<string>",
+                  "description": "Filter by the priority of the alarm."
+                },
+                {
+                  "disabled": false,
+                  "key": "alarm_sensor_sources",
+                  "value": "<uuid>",
+                  "description": "Filter by the UUID of the sensor."
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_occured_gte",
+                  "value": "<long>",
+                  "description": "Filter for alarms that occurred at or after this timestamp (epoch milliseconds)."
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_occured_lte",
+                  "value": "<long>",
+                  "description": "Filter for alarms that occurred at or before this timestamp (epoch milliseconds)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eabbc7d9-9cf4-4d4d-baac-2365bcb5dedd",
+              "name": "A paginated list of alarms.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "timestamp_occured,asc"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "suppressed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "rule_intent",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "rule_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "rule_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "priority_label",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "priority_label",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "alarm_sensor_sources",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "timestamp_occured_gte",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "timestamp_occured_lte",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"first\": {\n      \"href\": \"https://mysubdomain.alienvault.cloud/api/2.0/alarms?page=0&size=20&sort=timestamp_occured,desc\"\n    },\n    \"self\": {\n      \"href\": \"https://mysubdomain.alienvault.cloud/api/2.0/alarms\"\n    },\n    \"next\": {\n      \"href\": \"https://mysubdomain.alienvault.cloud/api/2.0/alarms?page=1&size=20&sort=timestamp_occured,desc\"\n    },\n    \"last\": {\n      \"href\": \"https://mysubdomain.alienvault.cloud/api/2.0/alarms?page=175&size=20&sort=timestamp_occured,desc\"\n    }\n  },\n  \"_embedded\": {\n    \"alarms\": [\n      {\n        \"uuid\": \"971918fd-a569-548a-5a80-1ffcda2a8365\",\n        \"priority\": 20,\n        \"status\": \"open\",\n        \"rule_intent\": \"Environmental Awareness\"\n      }\n    ]\n  },\n  \"page\": {\n    \"size\": 20,\n    \"totalElements\": 3506,\n    \"totalPages\": 176,\n    \"number\": 0\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c524112-f064-4e8c-acb9-c188e076ac20",
+          "name": "Get Alarm Details",
+          "request": {
+            "name": "Get Alarm Details",
+            "description": {
+              "content": "Retrieves the full details for a single alarm by its UUID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "alarms",
+                ":alarmId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "alarmId",
+                  "description": "(Required) The UUID of the alarm to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f600baee-ab62-4e66-bf78-9dd40fb53a2a",
+              "name": "Alarm details retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "alarmId",
+                      "description": "(Required) The UUID of the alarm to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"971918fd-a569-548a-5a80-1ffcda2a8365\",\n  \"has_alarm\": false,\n  \"needs_enrichment\": true,\n  \"priority\": 20,\n  \"suppressed\": false,\n  \"events\": [\n    {\n      \"uuid\": \"f5e69126-dc89-6691-e2e7-6db03905830d\"\n    }\n  ],\n  \"rule_intent\": \"Environmental Awareness\",\n  \"status\": \"open\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"https://mysubdomain.aveng.us/api/2.0/alarms/971918fd-a569-548a-5a80-1ffcda2a8365\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5565f278-7e64-4bfc-b77a-e4edfe7ad656",
+              "name": "Alarm not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "alarmId",
+                      "description": "(Required) The UUID of the alarm to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"string\",\n  \"location\": \"string\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12293a16-bf28-4412-a7ef-45c58155394e",
+          "name": "List labels for an alarm",
+          "request": {
+            "name": "List labels for an alarm",
+            "description": {
+              "content": "Retrieves a list of label IDs associated with a specific alarm.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "alarms",
+                ":alarmId",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "alarmId",
+                  "description": "(Required) The UUID of the alarm."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "80289374-8099-4d4b-aa41-74346a32ff02",
+              "name": "A list of label IDs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "alarmId",
+                      "description": "(Required) The UUID of the alarm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alarm_labels\": [\n    \"971918fd-a569-548a-5a80-1ffcda2a8365\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab1fbde4-28b3-4485-887c-35c4c391de63",
+              "name": "Alarm not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "alarmId",
+                      "description": "(Required) The UUID of the alarm."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7d82f72-7433-4db5-8e3a-5ae4d23af630",
+          "name": "Add a label to an alarm",
+          "request": {
+            "name": "Add a label to an alarm",
+            "description": {
+              "content": "Associates a label with a specific alarm.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "alarms",
+                ":alarmId",
+                "labels",
+                ":labelId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "alarmId",
+                  "description": "(Required) The UUID of the alarm."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "labelId",
+                  "description": "(Required) The ID of the label to add."
+                }
+              ]
+            },
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dbd67b20-4543-404d-bf6a-bd2b811aff24",
+              "name": "Label added successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId",
+                    "labels",
+                    ":labelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "alarmId",
+                      "description": "(Required) The UUID of the alarm."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelId",
+                      "description": "(Required) The ID of the label to add."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9f5952e6-5905-4139-9089-6a12d989858f",
+              "name": "Alarm or Label not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId",
+                    "labels",
+                    ":labelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "alarmId",
+                      "description": "(Required) The UUID of the alarm."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelId",
+                      "description": "(Required) The ID of the label to add."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c5363cff-e631-4ad9-87f0-b368918bb9e8",
+          "name": "Remove a label from an alarm",
+          "request": {
+            "name": "Remove a label from an alarm",
+            "description": {
+              "content": "Disassociates a label from a specific alarm.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "alarms",
+                ":alarmId",
+                "labels",
+                ":labelId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "alarmId",
+                  "description": "(Required) The UUID of the alarm."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "labelId",
+                  "description": "(Required) The ID of the label to remove."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "44a134dd-7cff-428d-9af8-01275b382d43",
+              "name": "Label removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId",
+                    "labels",
+                    ":labelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "alarmId",
+                      "description": "(Required) The UUID of the alarm."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelId",
+                      "description": "(Required) The ID of the label to remove."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bf60227a-74db-4cfd-9089-9e6a5bf57d24",
+              "name": "Alarm or Label not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alarms",
+                    ":alarmId",
+                    "labels",
+                    ":labelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "alarmId",
+                      "description": "(Required) The UUID of the alarm."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "labelId",
+                      "description": "(Required) The ID of the label to remove."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://your-subdomain.alienvault.cloud/api/2.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "223df0f9-77cc-4e2f-bf1a-baf5ab89e90e",
+    "name": "USM Anywhere™ API Reference Alarms API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AT&T Cybersecurity publishes REST APIs for USM Anywhere that provide a programmatic interface that will allow you to access your data directly from your own applications and extensions.",
+      "type": "text/plain"
+    }
+  }
+}
