@@ -85,6 +85,8 @@ apis:
     https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients
   baseURL: https://your-subdomain.alienvault.cloud/api/2.0
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -102,6 +104,8 @@ apis:
     https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients
   baseURL: https://your-subdomain.alienvault.cloud/api/2.0
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
