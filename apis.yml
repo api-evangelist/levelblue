@@ -111,14 +111,11 @@ apis:
   - type: DataModel
     url: data-model/levelblue-data-model.yml
 - aid: levelblue:levelblue-oauth-api
-  name: LevelBlue OAuth API
+  name: LevelBlue O Auth API
   description: Endpoint for OAuth 2.0 functionality.
-  humanURL: >-
-    https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients
-  baseURL: https://your-subdomain.alienvault.cloud/api/2.0
+  humanURL: https://otx.alienvault.com/assets/static/external_api.html
+  baseURL: https://otx.alienvault.com/api/v1
   tags:
-  - Authentication
-  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
