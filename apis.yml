@@ -116,6 +116,8 @@ apis:
   humanURL: https://otx.alienvault.com/assets/static/external_api.html
   baseURL: https://otx.alienvault.com/api/v1
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
