@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: USM Anywhere™ API Reference Alarms OAuth API
+  title: USM Anywhere™ API Reference O Auth API
   description: AT&T Cybersecurity publishes REST APIs for USM Anywhere that provide a programmatic interface that will allow you to access your data directly from your own applications and extensions.
   version: '2.0'
 servers:
@@ -51,8 +51,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: postOauthToken
+      x-operation-id-source: derived
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        result:
+          type: string
+        location:
+          type: string
+        error:
+          type: string
+      required:
+      - result
+      - location
     TokenResponse:
       type: object
       properties:
@@ -72,18 +86,6 @@ components:
       - expires_in
       - scope
       - jti
-    ErrorResponse:
-      type: object
-      properties:
-        result:
-          type: string
-        location:
-          type: string
-        error:
-          type: string
-      required:
-      - result
-      - location
   securitySchemes:
     basicAuth:
       type: http

@@ -1,0 +1,26 @@
+# Front Door AI Index — levelblue — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: levelblue
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.levelblue.com
+  final_host: www.levelblue.com
+  ownership: own
+  owner: levelblue
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 3
+  host_score: 3
+  density: 3.41
+  words: 881
+  tiers:
+    agentic: 0
+    core: 3
+    model: 0
+  ambiguous: 10
+  top_terms:
+    intelligence: 10
+    AI: 3
