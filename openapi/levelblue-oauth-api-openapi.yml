@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: USM Anywhere™ API Reference O Auth API
+  title: USM Anywhere™ API Reference OAuth API
   description: AT&T Cybersecurity publishes REST APIs for USM Anywhere that provide a programmatic interface that will allow you to access your data directly from your own applications and extensions.
   version: '2.0'
 servers:

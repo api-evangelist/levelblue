@@ -140,6 +140,36 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Event:
+      type: object
+      description: This object contains all information pertaining to an Event. Its structure can vary.
+      additionalProperties: true
+    EventPage:
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PageLinks'
+        _embedded:
+          $ref: '#/components/schemas/EmbeddedEvents'
+        page:
+          $ref: '#/components/schemas/PageDetail'
+      required:
+      - _links
+      - _embedded
+      - page
+    PageLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
+        first:
+          $ref: '#/components/schemas/HalLink'
+        last:
+          $ref: '#/components/schemas/HalLink'
+        next:
+          $ref: '#/components/schemas/HalLink'
+        prev:
+          $ref: '#/components/schemas/HalLink'
     EmbeddedEvents:
       type: object
       properties:
@@ -165,36 +195,6 @@ components:
       - totalElements
       - totalPages
       - number
-    EventPage:
-      type: object
-      properties:
-        _links:
-          $ref: '#/components/schemas/PageLinks'
-        _embedded:
-          $ref: '#/components/schemas/EmbeddedEvents'
-        page:
-          $ref: '#/components/schemas/PageDetail'
-      required:
-      - _links
-      - _embedded
-      - page
-    Event:
-      type: object
-      description: This object contains all information pertaining to an Event. Its structure can vary.
-      additionalProperties: true
-    PageLinks:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/HalLink'
-        first:
-          $ref: '#/components/schemas/HalLink'
-        last:
-          $ref: '#/components/schemas/HalLink'
-        next:
-          $ref: '#/components/schemas/HalLink'
-        prev:
-          $ref: '#/components/schemas/HalLink'
     HalLink:
       type: object
       properties:
