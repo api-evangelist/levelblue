@@ -250,90 +250,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        result:
-          type: string
-        location:
-          type: string
-        error:
-          type: string
-      required:
-      - result
-      - location
-    EventLinks:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/HalLink'
-    AlarmEvent:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        has_alarm:
-          type: boolean
-        needs_enrichment:
-          type: boolean
-        priority:
-          type: integer
-        suppressed:
-          type: boolean
-        source_address:
-          type: string
-        source_asset_id:
-          type: string
-        source_canonical:
-          type: string
-        source_country:
-          type: string
-        source_fqdn:
-          type: string
-        source_hostname:
-          type: string
-        source_name:
-          type: string
-        source_organisation:
-          type: string
-        destination_address:
-          type: string
-        destination_asset_id:
-          type: string
-        destination_canonical:
-          type: string
-        destination_country:
-          type: string
-        destination_fqdn:
-          type: string
-        destination_hostname:
-          type: string
-        destination_name:
-          type: string
-        destination_organisation:
-          type: string
-        _links:
-          $ref: '#/components/schemas/EventLinks'
-      required:
-      - uuid
-      - has_alarm
-      - needs_enrichment
-    AlarmLabels:
-      type: object
-      properties:
-        alarm_labels:
-          type: array
-          items:
-            type: string
-            format: uuid
-      required:
-      - alarm_labels
-    AlarmSouceLinks:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/HalLink'
     AlarmPage:
       type: object
       properties:
@@ -347,31 +263,32 @@ components:
       - _links
       - _embedded
       - page
-    AlarmSource:
+    AlarmLinks:
       type: object
       properties:
-        address:
-          type: string
-        hostname:
-          type: string
-        fqdn:
-          type: string
-        asset_id:
-          type: string
-        organisation:
-          type: string
-        country:
-          type: string
-        canonical:
-          type: string
-        name:
-          type: string
-        event_count:
-          type: integer
-        _links:
-          $ref: '#/components/schemas/AlarmSouceLinks'
+        self:
+          $ref: '#/components/schemas/HalLink'
+    EmbeddedAlarms:
+      type: object
+      properties:
+        alarms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alarm'
       required:
-      - event_count
+      - alarms
+    ErrorResponse:
+      type: object
+      properties:
+        result:
+          type: string
+        location:
+          type: string
+        error:
+          type: string
+      required:
+      - result
+      - location
     AlarmDestination:
       type: object
       properties:
@@ -442,27 +359,67 @@ components:
       properties:
         self:
           $ref: '#/components/schemas/HalLink'
-    EmbeddedAlarms:
-      type: object
-      properties:
-        alarms:
-          type: array
-          items:
-            $ref: '#/components/schemas/Alarm'
-      required:
-      - alarms
-    PageLinks:
+    AlarmSouceLinks:
       type: object
       properties:
         self:
           $ref: '#/components/schemas/HalLink'
-        first:
-          $ref: '#/components/schemas/HalLink'
-        last:
-          $ref: '#/components/schemas/HalLink'
-        next:
-          $ref: '#/components/schemas/HalLink'
-        prev:
+    AlarmEvent:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        has_alarm:
+          type: boolean
+        needs_enrichment:
+          type: boolean
+        priority:
+          type: integer
+        suppressed:
+          type: boolean
+        source_address:
+          type: string
+        source_asset_id:
+          type: string
+        source_canonical:
+          type: string
+        source_country:
+          type: string
+        source_fqdn:
+          type: string
+        source_hostname:
+          type: string
+        source_name:
+          type: string
+        source_organisation:
+          type: string
+        destination_address:
+          type: string
+        destination_asset_id:
+          type: string
+        destination_canonical:
+          type: string
+        destination_country:
+          type: string
+        destination_fqdn:
+          type: string
+        destination_hostname:
+          type: string
+        destination_name:
+          type: string
+        destination_organisation:
+          type: string
+        _links:
+          $ref: '#/components/schemas/EventLinks'
+      required:
+      - uuid
+      - has_alarm
+      - needs_enrichment
+    EventLinks:
+      type: object
+      properties:
+        self:
           $ref: '#/components/schemas/HalLink'
     PageDetail:
       type: object
@@ -480,11 +437,54 @@ components:
       - totalElements
       - totalPages
       - number
-    AlarmLinks:
+    PageLinks:
       type: object
       properties:
         self:
           $ref: '#/components/schemas/HalLink'
+        first:
+          $ref: '#/components/schemas/HalLink'
+        last:
+          $ref: '#/components/schemas/HalLink'
+        next:
+          $ref: '#/components/schemas/HalLink'
+        prev:
+          $ref: '#/components/schemas/HalLink'
+    AlarmSource:
+      type: object
+      properties:
+        address:
+          type: string
+        hostname:
+          type: string
+        fqdn:
+          type: string
+        asset_id:
+          type: string
+        organisation:
+          type: string
+        country:
+          type: string
+        canonical:
+          type: string
+        name:
+          type: string
+        event_count:
+          type: integer
+        _links:
+          $ref: '#/components/schemas/AlarmSouceLinks'
+      required:
+      - event_count
+    AlarmLabels:
+      type: object
+      properties:
+        alarm_labels:
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+      - alarm_labels
     HalLink:
       type: object
       properties:

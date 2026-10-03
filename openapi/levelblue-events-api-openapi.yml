@@ -140,6 +140,31 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    EmbeddedEvents:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+      required:
+      - events
+    PageDetail:
+      type: object
+      properties:
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        number:
+          type: integer
+      required:
+      - size
+      - totalElements
+      - totalPages
+      - number
     Event:
       type: object
       description: This object contains all information pertaining to an Event. Its structure can vary.
@@ -170,31 +195,6 @@ components:
           $ref: '#/components/schemas/HalLink'
         prev:
           $ref: '#/components/schemas/HalLink'
-    EmbeddedEvents:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-      required:
-      - events
-    PageDetail:
-      type: object
-      properties:
-        size:
-          type: integer
-        totalElements:
-          type: integer
-        totalPages:
-          type: integer
-        number:
-          type: integer
-      required:
-      - size
-      - totalElements
-      - totalPages
-      - number
     HalLink:
       type: object
       properties:
