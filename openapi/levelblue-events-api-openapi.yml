@@ -140,15 +140,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    EmbeddedEvents:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-      required:
-      - events
     PageDetail:
       type: object
       properties:
@@ -165,10 +156,16 @@ components:
       - totalElements
       - totalPages
       - number
-    Event:
+    HalLink:
       type: object
-      description: This object contains all information pertaining to an Event. Its structure can vary.
-      additionalProperties: true
+      properties:
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
+      required:
+      - href
     EventPage:
       type: object
       properties:
@@ -182,6 +179,10 @@ components:
       - _links
       - _embedded
       - page
+    Event:
+      type: object
+      description: This object contains all information pertaining to an Event. Its structure can vary.
+      additionalProperties: true
     PageLinks:
       type: object
       properties:
@@ -195,16 +196,15 @@ components:
           $ref: '#/components/schemas/HalLink'
         prev:
           $ref: '#/components/schemas/HalLink'
-    HalLink:
+    EmbeddedEvents:
       type: object
       properties:
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
       required:
-      - href
+      - events
   securitySchemes:
     basicAuth:
       type: http
