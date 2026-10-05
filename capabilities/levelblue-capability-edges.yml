@@ -1,0 +1,37 @@
+slug: levelblue
+provider: LevelBlue
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Alarms
+  spec_file: levelblue-alarms-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.92
+  evidence: GET /alarms  Get a page of alarms; GET /alarms/{alarmId}  Get Alarm Details; schemas Alarm,
+    AlarmEvent, AlarmSource, AlarmDestination
+  reason: USM Anywhere is an MSSP/SIEM platform; alarms here are security detections with source/destination
+    and correlated events, i.e. SOC detection and response rather than any financial or infrastructure
+    alerting.
+- tag: Events
+  spec_file: levelblue-events-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: GET /events  Get a page of events; GET /events/{eventId}  Get Event Details; schemas Event,
+    EventPage
+  reason: Security event log retrieval from the USM Anywhere SIEM, feeding SOC monitoring and investigation.
+    Maps to threat detection and response; the generic 'Events' name is grounded by the MSSP/SIEM document
+    context.
