@@ -43,7 +43,7 @@ x-tier: profiled
 x-tier-reason: real-openapi-harvested
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-10-06'
 x-docs-platform: mintlify
 x-docs-platform-confidence: medium
 x-docs-platform-checked: 2026-10-03
@@ -133,6 +133,8 @@ apis:
   - type: DataModel
     url: data-model/levelblue-data-model.yml
 common:
+- url: https://www.levelblue.com/blogs/levelblue-blog/rss.xml
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/levelblue-capability-edges.yml
   name: LevelBlue Business Capability Map
