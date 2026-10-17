@@ -250,15 +250,88 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    EmbeddedAlarms:
+    AlarmSouceLinks:
       type: object
       properties:
-        alarms:
-          type: array
-          items:
-            $ref: '#/components/schemas/Alarm'
+        self:
+          $ref: '#/components/schemas/HalLink'
+    HalLink:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+        templated:
+          type: boolean
       required:
-      - alarms
+      - href
+    AlarmSource:
+      type: object
+      properties:
+        address:
+          type: string
+        hostname:
+          type: string
+        fqdn:
+          type: string
+        asset_id:
+          type: string
+        organisation:
+          type: string
+        country:
+          type: string
+        canonical:
+          type: string
+        name:
+          type: string
+        event_count:
+          type: integer
+        _links:
+          $ref: '#/components/schemas/AlarmSouceLinks'
+      required:
+      - event_count
+    AlarmDestination:
+      type: object
+      properties:
+        address:
+          type: string
+        hostname:
+          type: string
+        fqdn:
+          type: string
+        asset_id:
+          type: string
+        organisation:
+          type: string
+        country:
+          type: string
+        canonical:
+          type: string
+        name:
+          type: string
+        event_count:
+          type: integer
+        _links:
+          $ref: '#/components/schemas/AlarmDestinationLinks'
+      required:
+      - event_count
+    ErrorResponse:
+      type: object
+      properties:
+        result:
+          type: string
+        location:
+          type: string
+        error:
+          type: string
+      required:
+      - result
+      - location
+    AlarmLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
     AlarmEvent:
       type: object
       properties:
@@ -311,31 +384,15 @@ components:
       - uuid
       - has_alarm
       - needs_enrichment
-    AlarmSource:
+    EmbeddedAlarms:
       type: object
       properties:
-        address:
-          type: string
-        hostname:
-          type: string
-        fqdn:
-          type: string
-        asset_id:
-          type: string
-        organisation:
-          type: string
-        country:
-          type: string
-        canonical:
-          type: string
-        name:
-          type: string
-        event_count:
-          type: integer
-        _links:
-          $ref: '#/components/schemas/AlarmSouceLinks'
+        alarms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alarm'
       required:
-      - event_count
+      - alarms
     Alarm:
       type: object
       properties:
@@ -376,6 +433,24 @@ components:
       - uuid
       - has_alarm
       - needs_enrichment
+    PageLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
+        first:
+          $ref: '#/components/schemas/HalLink'
+        last:
+          $ref: '#/components/schemas/HalLink'
+        next:
+          $ref: '#/components/schemas/HalLink'
+        prev:
+          $ref: '#/components/schemas/HalLink'
+    EventLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
     AlarmPage:
       type: object
       properties:
@@ -389,6 +464,21 @@ components:
       - _links
       - _embedded
       - page
+    AlarmLabels:
+      type: object
+      properties:
+        alarm_labels:
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+      - alarm_labels
+    AlarmDestinationLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HalLink'
     PageDetail:
       type: object
       properties:
@@ -405,96 +495,6 @@ components:
       - totalElements
       - totalPages
       - number
-    HalLink:
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri
-        templated:
-          type: boolean
-      required:
-      - href
-    AlarmLabels:
-      type: object
-      properties:
-        alarm_labels:
-          type: array
-          items:
-            type: string
-            format: uuid
-      required:
-      - alarm_labels
-    ErrorResponse:
-      type: object
-      properties:
-        result:
-          type: string
-        location:
-          type: string
-        error:
-          type: string
-      required:
-      - result
-      - location
-    PageLinks:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/HalLink'
-        first:
-          $ref: '#/components/schemas/HalLink'
-        last:
-          $ref: '#/components/schemas/HalLink'
-        next:
-          $ref: '#/components/schemas/HalLink'
-        prev:
-          $ref: '#/components/schemas/HalLink'
-    AlarmDestinationLinks:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/HalLink'
-    AlarmDestination:
-      type: object
-      properties:
-        address:
-          type: string
-        hostname:
-          type: string
-        fqdn:
-          type: string
-        asset_id:
-          type: string
-        organisation:
-          type: string
-        country:
-          type: string
-        canonical:
-          type: string
-        name:
-          type: string
-        event_count:
-          type: integer
-        _links:
-          $ref: '#/components/schemas/AlarmDestinationLinks'
-      required:
-      - event_count
-    EventLinks:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/HalLink'
-    AlarmLinks:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/HalLink'
-    AlarmSouceLinks:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/HalLink'
   securitySchemes:
     basicAuth:
       type: http
