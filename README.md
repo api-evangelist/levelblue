@@ -64,6 +64,133 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-LevelBlue is a company surfaced as a portfolio company of softbank-vision-fund and added to the API Evangelist network as a stub for enrichment. Sector: enterprise. This profile is a lead awaiting the enrichment pipeline.
+LevelBlue is a pure-play managed security service provider (MSSP), formed from AT&T Cybersecurity and the AlienVault platform it acquired, delivering managed detection and response, managed cloud and network security, incident readiness and response, cyber advisory, exposure management and email security, backed by SpiderLabs threat intelligence. Its developer surface is the USM Anywhere v2.0 REST API — a per-tenant, OAuth 2.0 client-credentials API over alarms and normalized security events, with HAL pagination and a webhook connector for pushing third-party events into the platform — alongside the LevelBlue Open Threat Exchange (OTX) DirectConnect API for community threat intelligence.
 
-Backed by: softbank-vision-fund
+**Areas:** Company · Enterprise · Cybersecurity · Security · Threat Intelligence · Managed Security · SIEM · Threat Detection · Incident Response · Compliance
+
+## LevelBlue on APIs.io
+
+Everything profiled for LevelBlue is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/levelblue/](https://apis.io/providers/levelblue/)** — or go straight to one of the APIs or properties below.
+
+### APIs (4)
+
+- [LevelBlue Open Threat Exchange (OTX) DirectConnect API](https://apis.io/apis/levelblue/levelblue-open-threat-exchange-otx-directconnect-api/) — The OTX DirectConnect API provides programmatic access to the LevelBlue Open Threat Exchange, an open community threat-intelligence platform. It exposes…
+- [LevelBlue Alarms API](https://apis.io/apis/levelblue/levelblue-alarms-api/) — Endpoints for managing and searching alarm messages.
+- [LevelBlue Events API](https://apis.io/apis/levelblue/levelblue-events-api/) — Endpoints for managing and searching events.
+- [LevelBlue O Auth API](https://apis.io/apis/levelblue/levelblue-oauth-api/) — Endpoint for OAuth 2.0 functionality.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Levelblue Usm Anywhere Webhooks](https://apis.io/asyncapis/levelblue/levelblue-usm-anywhere-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [levelblue-usm-anywhere](https://apis.io/servers/levelblue/levelblue-usm-anywhere/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [USM Anywhere™ API Reference Alarms API](https://apis.io/collections/levelblue/open-levelblue-alarms-api/)
+- [USM Anywhere™ API Reference Alarms Events API](https://apis.io/collections/levelblue/open-levelblue-events-api/)
+- [USM Anywhere™ API Reference Alarms OAuth API](https://apis.io/collections/levelblue/open-levelblue-oauth-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Levelblue Usm Anywhere Overlay](https://apis.io/overlays/levelblue/levelblue-usm-anywhere-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Levelblue Authentication](https://apis.io/security/levelblue/levelblue-authentication/)
+- [Levelblue Domain Security](https://apis.io/security/levelblue/levelblue-domain-security/)
+- [Levelblue Vulnerability Disclosure](https://apis.io/security/levelblue/levelblue-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Levelblue Scopes](https://apis.io/scopes/levelblue/levelblue-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.levelblue.com/)
+- [Documentation](https://docs.levelblue.com/documentation)
+- [Getting started](https://docs.levelblue.com/documentation/usm-anywhere/user-guide/user-management/api-clients)
+- [API reference](https://docs.levelblue.com/api-reference/oauth/get-oauth-token)
+- [Pricing](https://www.levelblue.com/pricing)
+- [Support](https://www.levelblue.com/company/support)
+- [Blog](https://www.levelblue.com/blogs/levelblue-blog)
+- [Security](https://docs.levelblue.com/documentation/how-to-submit-a-security-issue)
+- [Terms of service](https://www.levelblue.com/legal/website-terms-of-use)
+- [Privacy policy](https://www.levelblue.com/legal/privacy-policy)
+- [GitHub](https://github.com/AlienVault-OTX)
+- [Status](https://status.alienvault.cloud/)
+
+## API Evangelist rating
+
+**Kin Score 50.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 55.4 |
+| Contract governance | 4.5 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 31.6 |
+
+**Agent readiness 28.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/levelblue/](https://apis.io/providers/levelblue/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LevelBlue: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/levelblue/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
